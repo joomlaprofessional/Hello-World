@@ -1,0 +1,5 @@
+{
+  "post": "Obuwie i trzewiki",
+  "title": "But siedmiomiowy",
+  "description": "\\-label:'Typed List'\n\nname:'typed_list'\n\nwidget:'list'\n\ntypes:\n\n\\-label:'janusz.vue template'\n\nname:'type_1_object'\n\nwidget:'object'\n\nfields:\n\n\\-label:'Related Category'\n\nname:'pages-of-januszvue'\n\nwidget:'relation'\n\ncollection:'pages-januszvue'\n\ndisplayFields: \\['title']\n\nsearchFields: \\['title','slug']\n\nvalueField:'slug'\n\n\\- {label:'Label',name:'string',widget:'string'}\n\n\\-label:'blog.vue template'\n\nname:'type_2_object'\n\nwidget:'object'\n\nfields:\n\n\\-label:'Related Category'\n\nname:'pages-of-januszvue'\n\nwidget:'relation'\n\ncollection:'pages-januszvue'\n\ndisplayFields: \\['title']\n\nsearchFields: \\['title','slug']\n\nvalueField:'slug'\n\n\\- {label:'Label',name:'string',widget:'string'}"
+}

@@ -1,0 +1,7 @@
+[build]
+#   publish = ""
+   command = "node ./admin/mergejson.js _products && node ./admin/mergejson.js _productcategories && sh simpletheme/merge.sh"
+#    functions = "functions"
+
+#[context.production]
+#   environment = { ACCESS_TOKEN = "super secret" }

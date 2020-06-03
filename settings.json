@@ -1,0 +1,20 @@
+{
+  "title": "simpletheme",
+  "typed_list": [
+    {
+      "type": "janusz.vue_entry",
+      "pages-of-januszvue": "susza-rolnicza-w-całej-polsce-plony-mniejsze-nawet-o-20-proc",
+      "string": "O suszy"
+    },
+    {
+      "type": "janusz.vue_entry",
+      "pages-of-januszvue": "latkowski-do-szyca",
+      "string": "O Szycu"
+    },
+    {
+      "type": "blog.vue_entry",
+      "pages-of-blogvue": "cos-ta-2",
+      "string": "Blog"
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+# Szablony: glowna (selektywne pokazanie artykulow po fladze featured ) + menu wybor kategorii
+#           kategoria (selektywne pokazanie artykulow po polu category )
+#           tekst (o nas, regulamin, etc)
+#           koszyk (sama platnosc- checkout - po stronie stripe)
+
+
+
+backend:
+  name: git-gateway
+  branch: master
+
+media_folder: static/img
+public_folder: /img
+
+
+collections:
+  # ***************************************************************************************
+  # PRODUCT CATEGORY
+  # ***************************************************************************************
+  - name: 'productcategories' # Used in routes, ie.: /admin/collections/:slug/edit
+    label: 'Product categories' # Used in the UI
+    label_singular: 'Product category' # Used in the UI, ie: "New Post"
+    description: >
+      The description is a great place for tone setting, high level information, and editing
+      guidelines that are specific to a collection.
+    folder: '_productcategories'
+    format: 'json'
+    slug: '{{title}}'
+    # summary: '{{title}} -- {{year}}/{{month}}/{{day}}'
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields each document in this collection have
+      - { label: 'Title', name: 'title', widget: 'string', tagname: 'h1' }
+      - {
+          label: 'Publish Date',
+          name: 'date',
+          widget: 'datetime',
+          dateFormat: 'YYYY-MM-DD',
+          timeFormat: 'HH:mm',
+          format: 'YYYY-MM-DD HH:mm',
+        }
+      - label: 'Cover Image'
+        name: 'image'
+        widget: 'image'
+        required: false
+        tagname: ''
+
+      - { label: 'Body', name: 'body', widget: 'markdown', hint: 'Main content goes here.' }
+    meta:
+      - { label: 'SEO Description', name: 'description', widget: 'text' }
+
+
+  # ***************************************************************************************
+  # PRODUCT
+  # ***************************************************************************************
+  - name: 'products' # Used in routes, ie.: /admin/collections/:slug/edit
+    label: 'Products' # Used in the UI
+    label_singular: 'Product' # Used in the UI, ie: "New Post"
+    description: >
+      The description is a great place for tone setting, high level information, and editing
+      guidelines that are specific to a collection.
+    folder: '_products'
+    slug: '{{title}}'
+    # summary: '{{title}} -- {{year}}/{{month}}/{{day}}'
+    format: 'json'
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields each document in this collection have
+      - { label: 'Title', name: 'title', widget: 'string', tagname: 'h1' }
+      - label: 'Related Category'
+        name: 'post'
+        widget: 'relation'
+        collection: 'productcategories'
+        displayFields: ['title']
+        searchFields: ['title', 'body']
+        valueField: 'title'
+      - label: 'Cover Image'
+        name: 'image'
+        widget: 'image'
+        required: false
+        tagname: ''
+      - { label: 'Description', name: 'description', widget: 'markdown', hint: 'Main content goes here.' }
+    meta:
+      - { label: 'SEO Description', name: 'description', widget: 'text' }
+
+  # ***************************************************************************************
+  # SITE SETTINGS
+  # ***************************************************************************************
+  - name: 'settings'
+    label: 'Settings'
+    delete: false # Prevent users from deleting documents in this collection
+    preview: false
+    files:
+      - name: 'general'
+        label: 'Site Settings'
+        file: 'settings.json'
+        description: 'General Site Settings'
+        fields:
+        - label: "Theme"
+          name: "title"
+          widget: "select"
+          options:
+            - { label: "Simple Theme", value: "simpletheme" }
+            - { label: "Not existing yet", value: "error" }
+        - label: 'Typed List'
+          name: 'typed_list'
+          widget: 'list'
+          types:
+            - label: 'janusz.vue template'
+              name: 'janusz.vue_entry'
+              widget: 'object'
+              fields:
+                - label: 'Related Category'
+                  name: 'pages-of-januszvue'
+                  widget: 'relation'
+                  collection: 'pages-januszvue'
+                  displayFields: ['title']
+                  searchFields: ['title', 'slug']
+                  valueField: "{{slug}}"
+                - { label: 'Label', name: 'string', widget: 'string' }
+            - label: 'blog.vue template'
+              name: 'blog.vue_entry'
+              widget: 'object'
+              fields:
+                - label: 'Related Category (slug)'
+                  name: 'pages-of-blogvue'
+                  widget: 'relation'
+                  collection: 'pages-blogvue'
+                  displayFields: ['title']
+                  searchFields: ['title', 'slug']
+                  valueField: "{{slug}}"
+                - { label: 'Label', name: 'string', widget: 'string' }
+
+
+  # ***************************************************************************************
+  # JANUSZ.VUE TEMPLATE
+  # ***************************************************************************************
+  - name: 'pages-januszvue' # Used in routes, ie.: /admin/collections/:slug/edit
+    label: 'Page content (janusz.vue)' # Used in the UI
+    label_singular: 'Page content' # Used in the UI, ie: "New Post"
+    description: >
+      Each page template (i.e. janusz.vue) has its data
+      Every CMS records will create a new page based on its template
+    folder: 'simpletheme/_janusz.vue'
+    format: 'json'
+    slug: '{{fields.title}}'
+    # summary: '{{title}} -- {{year}}/{{month}}/{{day}}'
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields each document in this collection have
+      - { label: 'Page Title (name)', name: 'title', widget: 'string', tagname: 'h1', required: true }
+      - {
+          label: 'Publish Date',
+          name: 'date',
+          widget: 'datetime',
+          dateFormat: 'YYYY-MM-DD',
+          timeFormat: 'HH:mm',
+          format: 'YYYY-MM-DD HH:mm',
+        }
+      - label: 'Cover Image'
+        name: 'image'
+        widget: 'image'
+        required: false
+        tagname: ''
+      - { label: 'Body', name: 'body', widget: 'markdown', hint: 'Main content goes here.', required: false }
+
+    meta:
+      - { label: 'SEO Description', name: 'description', widget: 'text' }
+
+
+
+
+  # ***************************************************************************************
+  # BLOG.VUE TEMPLATE
+  # ***************************************************************************************
+  - name: 'pages-blogvue' # Used in routes, ie.: /admin/collections/:slug/edit
+    label: 'Page content (blog.vue)' # Used in the UI
+    label_singular: 'Page content' # Used in the UI, ie: "New Post"
+    description: >
+      Each page template (i.e. blog.vue) has its data
+      Every CMS records will create a new page based on its template
+    folder: 'simpletheme/_blog.vue'
+    format: 'json'
+    slug: '{{fields.slug}}'
+    # summary: '{{title}} -- {{year}}/{{month}}/{{day}}'
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields each document in this collection have
+      - { label: 'Slug', name: 'slug', widget: 'string', required: true }
+      - { label: 'Blog Title (name)', name: 'title', widget: 'string', tagname: 'h1', required: true }
+      - {
+          label: 'Publish Date',
+          name: 'date',
+          widget: 'datetime',
+          dateFormat: 'YYYY-MM-DD',
+          timeFormat: 'HH:mm',
+          format: 'YYYY-MM-DD HH:mm',
+        }
+      - { label: 'Body', name: 'body', widget: 'markdown', hint: 'Main content goes here.', required: false }
+
+    meta:
+      - { label: 'SEO Description', name: 'description', widget: 'text' }
+
